@@ -13,10 +13,10 @@ if(isset($_POST['simpan'])) {
 
   $query = mysqli_query($koneksi, "INSERT INTO tb_kategori(id_kategori, nm_kategori) VALUES ('$id_kategori', '$nm_kategori')");
   if ($query) {
-    echo "<script>alert('Data berhasil di tambahkan')</script>";
+    echo "<script>alert('Data berhasil ditambahkan')</script>";
     header("refresh:0, kategori.php");
   } else {
-    echo "<script>alert('Data gagal di tambahkan')</script>";
+    echo "<script>alert('Data gagal ditambahkan')</script>";
     header("refresh:0, kategori.php");
   }
 }
@@ -175,7 +175,7 @@ if(isset($_POST['simpan'])) {
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-          <li class="breadcrumb-item active">Kategori Produk</li>
+          <li class="breadcrumb-item">Kategori Produk</li>
           <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
@@ -192,11 +192,11 @@ if(isset($_POST['simpan'])) {
               <form class="row g-3 mt-2" method="post">
                 <div class="col-12">
                   <label for="nm_kategori" class="form-label">Nama Kategori</label>
-                  <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori">
+                  <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="Masukkan Nama Kategori Produk">
                 </div>
                 <div class="text-center">
                   <button type="reset" class="btn btn-secondary">Reset</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                 </div>
               </form><!-- Vertical Form -->
 
