@@ -21,6 +21,7 @@ if(isset($_POST['simpan'])) {
   }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,7 +68,7 @@ if(isset($_POST['simpan'])) {
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Homefurnish</span>
       </a>
@@ -116,7 +117,7 @@ if(isset($_POST['simpan'])) {
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="">
+        <a class="nav-link " href="index.php">
           <i class="bi bi-grid"></i>
           <span>Beranda</span>
         </a>
@@ -173,7 +174,7 @@ if(isset($_POST['simpan'])) {
       <h1>Kategori Produk</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
           <li class="breadcrumb-item active">Kategori Produk</li>
           <li class="breadcrumb-item active">Tambah</li>
         </ol>
@@ -195,7 +196,7 @@ if(isset($_POST['simpan'])) {
                 </div>
                 <div class="text-center">
                   <button type="reset" class="btn btn-secondary">Reset</button>
-                  <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form><!-- Vertical Form -->
 

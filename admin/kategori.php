@@ -43,7 +43,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Homefurnish</span>
       </a>
@@ -52,7 +52,8 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword" 
+        value="<?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?>">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -69,7 +70,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/haechan.jpg" alt="Profile" class="rounded-circle">
+            <img src="assets/img/user.jpeg" alt="Profile" class="rounded-circle">
 
           </a><!-- End Profile Image Icon -->
 
@@ -103,7 +104,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="index.php">
           <i class="bi bi-grid"></i>
           <span>Beranda</span>
         </a>
@@ -161,7 +162,7 @@
       <h1>Kategori Produk</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
           <li class="breadcrumb-item">Kategori Produk</li>
         </ol>
       </nav>
@@ -222,7 +223,7 @@
                         <td><?php echo $hasil["nm_kategori"]; ?>
                         </td>
                         <td>
-                          <a href="t_kategori.php?id=<?php echo $hasil["id_kategori"]; ?>"
+                          <a href="e_kategori.php?id=<?php echo $hasil["id_kategori"]; ?>"
                             class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i>
                           </a>
@@ -269,7 +270,7 @@
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://www.instagram.com/arletaamaya?igsh=ejZ5ZHVndXBpeGNw"
+      Designed by <a href="https://www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ=="
         target="_blank">Veisya</a>
     </div>
   </footer><!-- End Footer -->
