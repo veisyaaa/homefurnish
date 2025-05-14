@@ -62,13 +62,13 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <img src="assets/img/user.jpeg" alt="Profile" class="rounded-circle">
                         <!-- profile-img.jpg diganti dengan foto kalian -->
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Nama Kalian</h6>
+                            <h6>Veisya</h6>
                             <span>Admin</span>
                         </li>
                         <li>
@@ -188,6 +188,7 @@
                                         <th scope="col">Nama Produk</th>
                                         <th scope="col">Harga</th>
                                         <th scope="col">Stok</th>
+                                        <th scope="col">Deskripsi</th>
                                         <th scope="col">Nama Kategori</th>
                                         <th scope="col">Gambar</th>
                                         <th scope="col">Aksi</th>
