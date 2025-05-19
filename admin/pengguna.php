@@ -1,58 +1,17 @@
 <?php
 include "koneksi.php";
 
-//Pastikan ada ID produk yang dikirimkan 
-if (isset($_GET['id'])) {
-    $id_produk = $_GET['id'];
-
-    //Ambil data produk berdasarkan ID
-    $query = mysqli_query($koneksi, "SELECT * FROM tb_produk WHERE id_produk = '$id_produk'");
-    $data = mysqli_fetch_array($query);
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
 }
 
-//Jika tombol update ditekan
-if (isset($_POST['update'])) {
-    $nm_produk = $_POST['nm_produk'];
-    $harga = $_POST['harga'];
-    $stok = $_POST['stok'];
-    $desk = $_POST['desk'];
-    $id_kategori = $_POST['id_kategori'];
-    $gambar_lama = $_POST['gambar_lama'];
-
-    // Cek apakah ada gambar baru yang diupload
-    if ($_FILES['gambar']['name'] != "") {
-        $imgfile = $_FILES['gambar']['name'];
-        $tmp_file = $_FILES['gambar']['tmp_name'];
-        $extension = strtolower(pathinfo($imgfile, PATHINFO_EXTENSION));
-        $dir = "produk_img/";
-        $allowed_extension = array("jpg", "jpeg", "png", "webp");
-
-        if (!in_array($extension, $allowed_extension)) {
-            echo "<script>alert('Format tidak valid. Hanya jpg, jpeg, png, dan webp yang diperbolehkan.')</script>";
-        } else {
-            // Hapus gambar lama jika ada 
-            if (file_exists($dir . $gambar_lama) && $gambar_lama != "") {
-                unlink($dir . $gambar_lama);
-            }
-
-            //Simpan gambar baru dengan nama unik
-            $imgnewfile = md5(time() . $imgfile) . "." . $extension;
-            move_uploaded_file($tmp_file, $dir . $imgnewfile);
-        }
-    } else {
-        $imgnewfile = $gambar_lama; //Jika tidak ada gambar baru, gunakan gambar lama
-    }
-
-    //update data ke database
-    $query = mysqli_query($koneksi, "UPDATE tb_produk SET nm_produk='$nm_produk', harga='$harga', stok='$stok', desk='$desk', id_kategori='$id_kategori', gambar='$imgnewfile' WHERE id_produk='$id_produk'");
-
-    if ($query) {
-        echo "<script>alert('Produk berhasil di perbarui')</script>";
-        header("refresh:0, produk.php");
-    } else {
-        echo "<script>alert('Gagal memperbarui produk!')</script>";
-        header("refresh:0, produk.php");
-    }
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+    echo "<script>
+    alert('Akses ditolak! Halaman ini hanya untuk Admin.'); window.location.href='login.php'</script>";
+    exit;
 }
 ?>
 
@@ -63,7 +22,7 @@ if (isset($_POST['update'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Produk - Homefurnish Admin</title>
+    <title>Pengguna- Homefurnish Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -86,6 +45,7 @@ if (isset($_POST['update'])) {
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -101,23 +61,33 @@ if (isset($_POST['update'])) {
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?>">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
+
+
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
 
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="assets/img/user.jpeg" alt="Profile" class="rounded-circle">
-                        <!-- profile-img.jpg diganti nama file gambar kalian -->
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest' ?></h6>
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
                             <span>Admin</span>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -158,7 +128,7 @@ if (isset($_POST['update'])) {
             </li><!-- End Kategori Produk Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="produk.php">
+                <a class="nav-link collapsed" href="produk.php">
                     <i class="bi bi-shop"></i>
                     <span>Produk</span>
                 </a>
@@ -185,7 +155,7 @@ if (isset($_POST['update'])) {
                 </a>
             </li><!-- End Laporan Page Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="pengguna.php">
+                <a class="nav-link" href="pengguna.php">
                     <i class="bi bi-people"></i>
                     <span>Pengguna</span>
                 </a>
@@ -197,67 +167,88 @@ if (isset($_POST['update'])) {
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Produk</h1>
+            <h1>Pengguna</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item">Produk</li>
-                    <li class="breadcrumb-item active">Edit</li>
+                    <li class="breadcrumb-item active">Pengguna</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="t_pengguna.php" class="btn btn-primary mt-3">
+                            <i class="bi bi-plus-lg"></i> Tambah Data
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <section class="section">
             <div class="row">
-                <div class="col-lg-6">
-
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <!-- Table with stripped rows -->
+                            <table class="table table-striped mt-2">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Pengguna</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include "koneksi.php";
+                                    $no = 1;
 
-                            <!-- Vertical Form -->
-                            <form class="row g-3 mt-2" method="post" enctype="multipart/form-data">
-                                <input type= "hidden" name="gambar_lama" value="<?php echo $data['gambar']; ?>">
-                                <div class="col-12">
-                                    <label for="nm_produk" class="form-label">Nama Produk</label>
-                                    <input type="text" class="form-control" id="nm_produk" name="nm_produk" value="<?php echo $data['nm_produk']; ?>" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="harga" class="form-label">Harga</label>
-                                    <input type="number" class="form-control" id="harga" name="harga" value="<?php echo $data['harga']; ?>" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="stok" class="form-label">Stok</label>
-                                    <input type="number" class="form-control" id="stok" name="stok" value="<?php echo $data['stok']; ?>" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="desk" class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" id="desk" name="desk" value="<?php echo $data['desk']; ?>" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <label for="id_kategori" class="form-label">Kategori</label>
-                                    <select class="form-control" id="id_kategori" name="id_kategori" required>
-                                        <option value="">-- Pilih Kategori --</option>
+                                    // Cek apakah ada input pencarian
+                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
+
+                                    // Query dasar
+                                    $sql_query = "SELECT id_user, username, status FROM tb_user";
+
+                                    // Tambahkan pencarian jika input tidak kosong
+                                    if (!empty($query)) {
+                                        $sql_query .= " WHERE username LIKE '%$query%'";
+                                    }
+
+                                    $sql = mysqli_query($koneksi, $sql_query);
+
+                                    if (mysqli_num_rows($sql) > 0) {
+                                        while ($hasil = mysqli_fetch_array($sql)) {
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $hasil['username']; ?></td>
+                                                <td><?php echo $hasil['status']; ?></td>
+                                                <td>
+                                                    <a href="h_pengguna.php?id=<?php echo $hasil['id_user']; ?>" 
+                                                    class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                         <?php
-                                        $query_kategori = mysqli_query($koneksi, "SELECT * FROM tb_kategori");
-                                        while ($kategori = mysqli_fetch_array($query_kategori)) {
-                                            $selected = ($kategori['id_kategori'] == $data['id_kategori']) ? 'selected' : '';
-                                            echo "<option value='{$kategori['id_kategori']}' $selected>{$kategori['nm_kategori']}<option>";
                                         }
+                                    } else {
                                         ?>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="gambar" class="form-label">Gambar Produk</label>
-                                    <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
-                                    <br>
-                                    <?php if ($data['gambar']) { ?>
-                                        <img src="produk_img/<?php echo $data['gambar']; ?>" width="150">
-                                    <?php } ?>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary" name="update">Update</button>
-                                    <a href="produk.php" class="btn btn-secondary">Kembali</a>
-                                </div>
-                            </form>
+                                        <tr>
+                                            <td colspan="4" class="text-center">Data tidak ditemukan</td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
 
                         </div>
                     </div>
@@ -271,10 +262,11 @@ if (isset($_POST['update'])) {
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Homefurnish</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Homefusrnish</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="//www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ==">Veisya</a>
+            Designed by <a href="https://www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ=="
+      target="_blank">Veisya</a>
         </div>
     </footer><!-- End Footer -->
 
