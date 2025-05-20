@@ -1,19 +1,6 @@
 <?php
-session_start();
+
 include "koneksi.php";
-
-// Cek apakah sudah login
-if (!isset($_SESSION["login"])) {
-    header("Location: login.php");
-    exit;
-}
-
-// Cek apakah status tersedia dan pastikan user adalah admin
-if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
-    echo "<script>
-    alert('Akses ditolak! Halaman ini hanya untuk Admin.'); window.location.href='login.php'</script>";
-    exit;
-}
 
 if (isset($_POST['simpan'])) {
     // Ambil ID terakhir dari tb_user
@@ -189,12 +176,14 @@ if (isset($_POST['simpan'])) {
                 </ol>
             </nav>
         </div><!-- End Page Title -->
-
         <section class="section">
             <div class="row">
                 <div class="col-lg-6">
+
                     <div class="card">
                         <div class="card-body">
+
+                            <!-- vertikal form -->
                             <form class="row g-3 mt-2" method="post">
                                 <!-- Username -->
                                 <div class="col-12">
@@ -239,8 +228,7 @@ if (isset($_POST['simpan'])) {
             &copy; Copyright <strong><span>Homefurnish</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ=="
-      target="_blank">Veisya</a>
+            Designed by <a href="https://www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ==">Veisya</a>
         </div>
     </footer><!-- End Footer -->
 

@@ -92,17 +92,15 @@ if (isset($_POST["login"])) {
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  <form class="row g-3" method="post">
+                  <form class="row g-3 needs-validation" method="POST" novalidate>
 
                     <div class="col-12">
-                      <label for="username" class="form-label">Username</label>
-                      <div class="input-group">
+                      <label for="yourUsername" class="form-label">Username</label>
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
                       </div>
-                    </div>
 
                     <div class="col-12">
-                      <label for="password" class="form-label">Password</label>
+                      <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
                     </div>
 
@@ -115,8 +113,7 @@ if (isset($_POST["login"])) {
               </div>
 
               <div class="credits">
-                Designed by <a href="https://www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ=="
-      target="_blank">Veisya</a>
+                Designed by <a href="https://www.instagram.com/veisyaaa_?igsh=MXMwdWpwNjBydTV0aQ==">Veisya</a>
               </div>
 
             </div>
