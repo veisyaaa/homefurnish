@@ -61,31 +61,13 @@
                     <?php session_start(); ?>
                     <?php if (isset($_SESSION['username'])) : ?>
                       <div class="header_icon d-flex">
-                        <!-- Cart Link -->
-                         <?php
-                         include 'admin/koneksi.php';
-
-                         $user_id = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null;
-
-                         if ($user_id) {
-                          $query = "SELECT COUNT(*) as total FROM tb_pesanan WHERE id_user = '$user_id'";
-                          $result = mysqli_query($koneksi, $query);
-                          $data = mysqli_fetch_assoc($result);
-                          $jumlah_item = isset($data['total']) ? $data['total'] : 0;
-                         } else {
-                          $jumlah_item = 0;
-                         }
-                         ?>
-
-                         <a href="detail_produk.php" id="cartLink" style="position: relative; display: inline-block";>
-                         </a>
 
                          <!-- User Dropdown -->
                         <div class="dropdown user">
                             <a class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown3" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>
-                                <span class="ml-2 text-dark"><?= htmlspecialchars($_SESSION['username']); ?></span> <!-- Menampilkan usernamedari session -->
+                                <span class="ml-2 text-dark"><?= htmlspecialchars($_SESSION['username']); ?></span> <!-- Menampilkan username dari session -->
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                               <a class="dropdown-item" href="logout.php">Logout</a>
@@ -94,7 +76,7 @@
                         </div>
 
 
-                        <?php else :?>
+                        <?php else : ?>
                           <!-- Login Button -->
                            <a href="login.php" class="btn btn-primary ml-3 px-3 py-2" style="border-radius: 20px;">Login</a>
                            <?php endif; ?>
@@ -153,6 +135,7 @@
           $total_bayar = 0;
 
           ?>
+          
           <from action="update_cart.php" method="POST">
           <table class="table">
             <thead>
@@ -286,71 +269,7 @@
       <div class="row justify-content-around">
       </div>
     </div>
-        <div class="col-sm-6 col-lg-2">
-          <div class="single_footer_part">
-            <h4>Top Products</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Managed Website</a></li>
-              <li><a href="">Manage Reputation</a></li>
-              <li><a href="">Power Tools</a></li>
-              <li><a href="">Marketing Service</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-2">
-          <div class="single_footer_part">
-            <h4>Quick Links</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Jobs</a></li>
-              <li><a href="">Brand Assets</a></li>
-              <li><a href="">Investor Relations</a></li>
-              <li><a href="">Terms of Service</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-2">
-          <div class="single_footer_part">
-            <h4>Features</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Jobs</a></li>
-              <li><a href="">Brand Assets</a></li>
-              <li><a href="">Investor Relations</a></li>
-              <li><a href="">Terms of Service</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-2">
-          <div class="single_footer_part">
-            <h4>Resources</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Guides</a></li>
-              <li><a href="">Research</a></li>
-              <li><a href="">Experts</a></li>
-              <li><a href="">Agencies</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-          <div class="single_footer_part">
-            <h4>Newsletter</h4>
-            <p>Heaven fruitful doesn't over lesser in days. Appear creeping
-            </p>
-            <div id="mc_embed_signup">
-              <form target="_blank"
-                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                method="get" class="subscribe_form relative mail_part">
-                <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-                  class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = ' Email Address '">
-                <button type="submit" name="submit" id="newsletter-submit"
-                  class="email_icon newsletter-submit button-contactForm">subscribe</button>
-                <div class="mt-10 info"></div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
+ 
     </div>
     <div class="copyright_part">
       <div class="container">
