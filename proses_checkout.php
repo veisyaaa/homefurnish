@@ -3,7 +3,7 @@ include 'admin/koneksi.php';
 session_start();
 
 if (!isset($_SESSION['id_user'])) {
-    echo json_encode(["success" => false, "message" => "Silahkan login terlebih dahulu"]);
+    echo json_encode(["success" => false, "message" => "Silahkan login terlebih dahulu!"]);
     exit;
 }
 

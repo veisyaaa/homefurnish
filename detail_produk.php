@@ -32,12 +32,10 @@
       <div class="row align-items-center">
         <div class="col-lg-12">
           <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand mx-auto" href="index.php">
               <h1 class="m-0">Homefurnish</h1>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="menu_icon"><i class="fas fa-bars"></i></span>
             </button>
 
@@ -52,49 +50,49 @@
                 <li class="nav-item">
                   <a class="nav-link" href="contact.php">Hubungi Kami</a>
                 </li>
-               </ul>
-              </div>
-              <?php session_start(); ?>
-              <?php if (isset($_SESSION['username'])) : ?>
-                <div class="header_icon d-flex">
-                  <!-- Cart Link -->
-                   <?php
-                   include 'admin/koneksi.php';
+              </ul>
+            </div>
+            <?php session_start(); ?>
+            <?php if (isset($_SESSION['username'])) : ?>
+              <div class="header_icon d-flex">
+                <!-- Cart Link -->
+                <?php
+                include 'admin/koneksi.php';
 
-                   $user_id = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null;
+                $user_id = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null;
 
-                   if ($user_id) {
-                    $query = "SELECT COUNT(*) as total FROM tb_pesanan WHERE id_user = '$user_id'";
-                    $result = mysqli_query($koneksi, $query);
-                    $data = mysqli_fetch_assoc($result);
-                    $jumlah_item = isset($data['total']) ? $data['total'] : 0;
-                   } else {
-                    $jumlah_item = 0;
-                   }
-                   ?>
+                if ($user_id) {
+                  $query = "SELECT COUNT(*) as total FROM tb_pesanan WHERE id_user = '$user_id'";
+                  $result = mysqli_query($koneksi, $query);
+                  $data = mysqli_fetch_assoc($result);
+                  $jumlah_item = isset($data['total']) ? $data['total'] : 0;
+                } else {
+                  $jumlah_item = 0;
+                }
+                ?>
 
-                   <a href="cart.php" id="cartLink" style="position: relative; display: inline-block;">
-                    <i class="fas fa-cart-plus" style="font-size: 16px;"></i>
-                    <span class="cart-badge"><?= $jumlah_item ?></span>
-                   </a>
+                <a href="cart.php" id="cartLink" style="position: relative; display: inline-block;">
+                  <i class="fas fa-cart-plus" style="font-size: 16px;"></i>
+                  <span class="cart-badge"><?= $jumlah_item ?></span>
+                </a>
 
-                   <!-- User Dropdown -->
-                    <div class="dropdown user">
-                      <a class="dropdwon-toggle d-flex align-item-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user"></i>
-                        <span class="ml-2 text-dark"><?= htmlspecialchars($_SESSION['username']); ?></span> <!-- Menampilkan username dari session -->
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="logout.php">Logout</a>
-                      </div>
-                    </div>
+                <!-- User Dropdown -->
+                <div class="dropdown user">
+                  <a class="dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                    <span class="ml-2 text-dark"><?= htmlspecialchars($_SESSION['username']); ?></span> <!-- Menampilkan username dari session -->
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="logout.php">Logout</a>
+                  </div>
                 </div>
+              </div>
 
 
-                <?php else : ?>
-                  <!-- Login Button -->
-                   <a href="login.php" class="btn btn-primary ml-3 px-3 py-2" style="border-radius: 20px;">Login</a>
-                   <?php endif; ?>
+            <?php else : ?>
+              <!-- Login Button -->
+              <a href="login.php" class="btn btn-primary ml-3 px-3 py-2" style="border-radius: 20px;">Login</a>
+            <?php endif; ?>
 
           </nav>
         </div>
@@ -128,10 +126,7 @@
   //Pastikan ada parameter id_produk yang dikirim dari URL
   $id_produk = isset($_GET['id']) ? mysqli_real_escape_string($koneksi, $_GET['id']) : '';
 
-  $query = "SELECT p.nm_produk, p.harga, p.stok, p.desk, p.gambar, k.nm_kategori
-        FROM tb_produk p
-        JOIN tb_kategori k ON p.id_kategori = k.id_kategori
-        WHERE p.id_produk = '$id_produk'";
+  $query = "SELECT p.nm_produk, p.harga, p.stok, p.desk, p.gambar, k.nm_kategori FROM tb_produk p JOIN tb_kategori k ON p.id_kategori = k.id_kategori WHERE p.id_produk = '$id_produk'";
 
   $result = $koneksi->query($query);
   $produk = $result->fetch_assoc();
@@ -139,7 +134,7 @@
   //Tambahkan pesanan ke database
   if (isset($_POST['add_to_cart'])) {
     if (!isset($_SESSION['login'])) {
-      echo "<script>alert('Silahkan login terlebih dahulu!'); window.location.href='login.php';</script>";
+      echo "<script>alert('Silakan login terlebih dahulu!'); window.location.href='login.php';</script>";
     } else {
       $id_user = $_SESSION['id_user'];
       $qty = intval($_POST['qty']);
@@ -152,32 +147,31 @@
       if ($qty > $data_stok['stok']) {
         echo "<script>alert('Stok tidak mencukupi! Stok tersedia: {$data_stok['stok']}');</script>";
       } else {
-          // Buat id_pesanan otomatis dengan format P001, P002, dst.
-          $query_id = "SELECT id_pesanan FROM tb_pesanan ORDER BY id_pesanan DESC LIMIT 1";
-          $result_id = $koneksi->query($query_id);
-          if ($result_id->num_rows > 0) {
-            $row = $result_id->fetch_assoc();
-            $last_id = intval(substr($row['id_pesanan'], 1)); //Ambil angka dari id terakhir
-            $new_id = "M" . str_pad($last_id + 1, 3, '0', STR_PAD_LEFT); // Format M001, M002
-          } else {
-            $new_id= "M001"; // Jika belum ada pesanan, mulai dari M001
-          }
+        //Buat id_pesanan otomatis dengan format P001, P002, dst.
+        $query_id = "SELECT id_pesanan FROM tb_pesanan ORDER BY id_pesanan DESC LIMIT 1";
+        $result_id = $koneksi->query($query_id);
+        if ($result_id->num_rows > 0) {
+          $row = $result_id->fetch_assoc();
+          $last_id = intval(substr($row['id_pesanan'], 1)); //Ambil angka dari id terakhir
+          $new_id = "M" . str_pad($last_id + 1, 3, '0', STR_PAD_LEFT); //Format M001, M002
+        } else {
+          $new_id = "M001"; // Jika belum ada pesanan, mulai dari M001
+        }
 
-          // Simpan ke database
-          $query_insert = "INSERT INTO tb_pesanan (id_pesanan, id_produk, qty, total, id_user)
-                       VALUES ('$new_id', '$id_produk', '$qty', '$total', '$id_user')";
+        //Simpan ke database
+        $query_insert = "INSERT INTO tb_pesanan (id_pesanan, id_produk, qty, total, id_user) VALUES ('$new_id', '$id_produk', '$qty', '$total', '$id_user')";
 
-          if ($koneksi->query($query_insert) === TRUE) {
-            echo "<script>alert('Produk berhasil ditambahkan ke keranjang!'); window.location.href='belanja.php';</script>";
-          } else {
-            echo "<script>alert('Terjadi kesalahan saat menambahkan ke keranjang!');</script>";
-          }
+        if ($koneksi->query($query_insert) === TRUE) {
+          echo "<script>alert('Produk berhasil ditambahkan ke keranjang!'); window.location.href='belanja.php';</script>";
+        } else {
+          echo "<script>alert('Terjadi kesalahan saat menambahkan ke keranjang!');</script>";
+        }
       }
     }
   }
   ?>
 
-  <!-- kode HTML Produk -->
+  <!-- Kode HTML Produk -->
   <div class="product_image_area section_padding">
     <div class="container">
       <div class="row s_product_inner justify-content-between">
@@ -185,8 +179,7 @@
           <div class="product_slider_img">
             <div id="vertical">
               <div data-thumb="admin/produk_img/<?php echo $produk['gambar']; ?>">
-                <img src="admin/produk_img/<?php echo $produk['gambar']; ?>"
-                style="width: 779px; height: 525px; object-fit: cover;" />
+                <img src="admin/produk_img/<?php echo $produk['gambar']; ?>" style="width: 779px; height: 525px; object-fit: cover;" />
               </div>
             </div>
           </div>
@@ -198,36 +191,35 @@
             <ul class="list">
               <li>
                 <a class="active" href="#">
-                  <span>Kategori</span> : <?php echo $produk['nm_kategori']; ?>
-                </a>
+                  <span>Kategori</span> : <?php echo $produk['nm_kategori']; ?></a>
               </li>
             </ul>
             <p><?php echo nl2br($produk['desk']); ?></p>
 
-            <from method="post">
-            <div class="card_area d-flex justify-content-between align-items-center">
-              <div class="product_count">
-                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
-                <input class="input-number" type="text" name="qty" value="1" min="0" max="<?php echo $produk['stok']; ?>">
-                <span class="number-increment"> <i class="ti-plus"></i></span>
+            <form method="post">
+              <div class="card_area d-flex justify-content-between align-items-center">
+                <div class="product_count">
+                  <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                  <input class="input-number" type="text" name="qty" value="1" min="1" max="<?php echo $produk['stok']; ?>">
+                  <span class="number-increment"> <i class="ti-plus"></i></span>
+                </div>
+                <button type="submit" name="add_to_cart" class="btn_3">Keranjang</button>
               </div>
-              <button type="submit" name="add_to_cart" class="btn_3">Keranjang</button>
-            </div>
-            </from>
+            </form>
 
           </div>
         </div>
       </div>
     </div>
   </div>
-<!--================End Single Product Area =================-->
+  <!--================End Single Product Area =================-->
 
- <!--================Product Description Area =================-->
+  <!--================Product Description Area =================-->
   <section class="product_description_area">
     <div class="container">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
             aria-selected="true">Deskripsi</a>
         </li>
         <li class="nav-item">
@@ -259,7 +251,6 @@
     </div>
   </section>
   <!--================End Product Description Area =================-->
-  
 
   <!-- product_list part start-->
   <section class="product_list best_seller">
@@ -267,31 +258,29 @@
       <div class="row justify-content-center">
         <div class="col-lg-12">
           <div class="section_tittle text-center">
-            <h2>Produk Lainnya</h2>
+            <h2>Produk Lainnya </h2>
           </div>
         </div>
       </div>
       <?php
-      // Ambil produk lain dari database, kecuali produk yang sedang dilihat
+      //Ambil produk lain dari database, kecuali produk yang sedang dilihat
       $query_produk_lain = "SELECT id_produk, nm_produk, harga, gambar FROM tb_produk WHERE id_produk != '$id_produk' LIMIT 5";
       $result_produk_lain = $koneksi->query($query_produk_lain);
       ?>
-      
+
       <div class="row align-items-center justify-content-between">
         <div class="col-lg-12">
           <div class="best_product_slider owl-carousel">
-            <?php while ($produk_lain = $result_produk_lain->fetch_assoc()) {?>
-            <div class="single_product_item">
-              <img src="admin/produk_img/<?php echo $produk_lain['gambar']; ?>"
-              alt="<?php echo $produk_lain['nm_produk']; ?>" style="width: 200px; height:210px; object-fit: cover;">
-              <div class="single_product_text">
-                <h4><?php echo $produk_lain['nm_produk']; ?></h4>
-                <h3>Rp <?php echo  number_format($produk_lain['harga'], 0, ',', '.'); ?></h3>
-                <a href="detail_produk.php?id=<?php echo $produk_lain['id_produk']; ?>" class="add_cart">Lihat Detail</a>
+            <?php while ($produk_lain = $result_produk_lain->fetch_assoc()) { ?>
+              <div class="single_product_item">
+                <img src="admin/produk_img/<?php echo $produk_lain['gambar']; ?>" alt="<?php echo $produk_lain['nm_produk']; ?>" style="width: 200px; height: 210px; object-fit: cover;">
+                <div class="single_product_text">
+                  <h4><?php echo $produk_lain['nm_produk']; ?></h4>
+                  <h3>Rp <?php echo number_format($produk_lain['harga'], 0, ',', '.'); ?></h3>
+                  <a href="detail_produk.php?id=<?php echo $produk_lain['id_produk']; ?>" class="add_cart">Lihat Detail</a>
+                </div>
               </div>
-            </div>
-           <?php } ?>
-            </div>
+            <?php } ?>
           </div>
         </div>
       </div>
@@ -303,16 +292,6 @@
   <footer class="footer_part">
     <div class="container">
       <div class="row justify-content-around">
-    </div>
-        <div class="col-sm-6 col-lg-2">
-          <div class="single_footer_part">
-            <div id="mc_embed_signup">
-              <form target="_blank">
-                <div class="mt-10 info"></div>
-              </form>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     <div class="copyright_part">
@@ -330,7 +309,7 @@
           <div class="col-lg-4">
             <div class="footer_icon social_icon">
               <ul class="list-unstyled">
-                <li><a href="#" class="single_social_icon" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="#" class="single_social_icon"><i class="fab fa-instagram"></i></a></li>
               </ul>
             </div>
           </div>
