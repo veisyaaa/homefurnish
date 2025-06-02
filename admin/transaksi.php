@@ -1,3 +1,23 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+  header("Location: login.php");
+  exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+  echo "<script>
+     alert('Akses ditolak! Halaman ini hanya untuk admin.');
+     window.location.href='login.php';
+     </script>";
+     exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,7 +89,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -95,8 +115,8 @@
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
-                    <i class="bi bi-airplane"></i>
-                    <span>Kategori</span>
+                    <i class="bi bi-bag-check-fill"></i>
+                    <span>Kategori Produk</span>
                 </a>
             </li><!-- End Kategori Page Nav -->
 
@@ -159,18 +179,18 @@
         $result_kategori = $koneksi->query($sql_kategori);
 
         // Ambil kategori yang dipilih daru URL (jika ada)
-        $kategori_filter = isset($_GET['kategori']) ? $_GET['kategori'] : "";
+        $filter_kategori = isset($_GET['kategori']) ? $_GET['kategori'] : "";
 
         // Query untuk mengambil data penjualan dengan filter kategori jika ada
         $sql = "SELECT j.id_jual, u.username, j.tgl_jual, j.total, j.diskon
         FROM tb_jual j
         JOIN tb_user u ON j.id_user = u.id_user";
 
-        if (!empty($kategori_filter)) {
+        if (!empty($filter_kategori)) {
             // Jika kategori dipilih, filter berdasarkan kategori yang terkait dengan produk dalam tb_jualdtl
             $sql .= " JOIN tb_jualdtl jd ON j.id_jual = jd.id_jual
             JOIN tb_produk p ON jd.id_produk = p.id_produk
-            WHERE p.id_kategori = '$kategori_filter'";
+            WHERE p.id_kategori = '$filter_kategori'";
         }
 
         $sql .= " GROUP BY j.id_jual ORDER BY j.tgl_jual ASC"; // Mengelompokkan mengurutkan berdasarkan tanggal terbaru
@@ -183,13 +203,14 @@
                     <div class="card-body">
                         <div class="filter-bar mt-3">
                         <form class="filter-form d-flex align-items-center" method="GET" action="">
-                            <slect name="kategori" class="form-select me-2" style="max-width: 200px;" title="Pilih kategori">
+                            <select name="kategori" class="form-select me-2" style="max-width: 200px;" title="Pilih kategori">
                                 <option value="">-- Semua Kategori --</opyion>
                                 <?php 
                                 if ($result_kategori->num_rows > 0) {
                                     while ($row = $result_kategori->fetch_assoc()) {
-                                        $selected = ($kategori_filter == $row['id_kategori']) ? "selected" : "";
-                                        echo "<option value='" . $row['id_kategori'] . "' $selected>" . htmlspecialchars($row['nm_kategori']) . "</opyion>";
+                                         $selected = ($filter_kategori == $row['id_kategori']) ? "selected" : "";
+                                        echo "<option value='" . $row['id_kategori'] . "'
+                                        $selected>" . htmlspecialchars($row['nm_kategori']) . "</option>";
                                     }
                                 }
                                 ?>

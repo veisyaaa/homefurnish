@@ -95,8 +95,8 @@
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
-                    <i class="bi bi-airplane"></i>
-                    <span>Kategori</span>
+                    <i class="bi bi-bag-check-fill"></i>
+                    <span>Kategori Produk</span>
                 </a>
             </li><!-- End Kategori Page Nav -->
 

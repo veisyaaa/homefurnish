@@ -68,7 +68,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Veisya</h6>
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
                             <span>Admin</span>
                         </li>
                         <li>
@@ -105,8 +105,8 @@
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
-                    <i class="bi bi-airplane"></i>
-                    <span>Kategori</span>
+                    <i class="bi bi-bag-check-fill"></i>
+                    <span>Kategori Produk</span>
                 </a>
             </li><!-- End Kategori Page Nav -->
 
@@ -203,7 +203,7 @@
                                     $sql_query = "SELECT tb_produk.*, tb_kategori.nm_kategori FROM tb_produk LEFT JOIN tb_kategori ON tb_produk.id_kategori = tb_kategori.id_kategori";
 
                                     if (!empty($query)) {
-                                        $sql_query .= "WHERE tb_produk.nm_produk LIKE '%$query%' OR tb_kategori.nm_kategori LIKE '%query%' OR tb_produk.desk LIKE '%query%'";
+                                        $sql_query .= " WHERE tb_produk.nm_produk LIKE '%$query%' OR tb_kategori.nm_kategori LIKE '%query%' OR tb_produk.desk LIKE '%query%'";
 }
                                         $sql = mysqli_query($koneksi, $sql_query);
 

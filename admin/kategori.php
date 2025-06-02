@@ -1,3 +1,23 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+  header("Location: login.php");
+  exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+  echo "<script>
+     alert('Akses ditolak! Halaman ini hanya untuk admin.');
+     window.location.href='login.php';
+     </script>";
+     exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +96,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Veisya</h6>
+              <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
               <span>Admin</span>
             </li>
             <li>
@@ -84,7 +104,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -112,7 +132,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="kategori.php">
-          <i class="bi bi-box-seam"></i>
+          <i class="bi bi-bag-check-fill"></i>
           <span>Kategori Produk</span>
         </a>
       </li><!-- End Profile Page Nav -->
@@ -147,7 +167,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pengguna.php">
-          <i class="bi bi-person"></i>
+          <i class="bi bi-dash-circle"></i>
           <span>Pengguna</span>
         </a>
       </li><!-- End Pengguna Page Nav -->
@@ -201,7 +221,7 @@
 
                   // Cek apakah ada pencarian
                   $query = isset($_POST['query']) ?
-                    mysqli_real_escape_string($koneksi, $_POST['query']) : '';
+                  mysqli_real_escape_string($koneksi, $_POST['query']) : '';
 
                   // Query dasar
                   $sql_query = "SELECT id_kategori, nm_kategori
@@ -209,7 +229,7 @@
 
                   //Jika ada pencarian, tambahkan kondisi WHERE
                   if (!empty($query)) {
-                    $sql_query .= "WHERE nm_kategori LIKE
+                    $sql_query .= " WHERE nm_kategori LIKE
                     '%$query%'";
                   }
 
@@ -220,14 +240,14 @@
                   ?>
                       <tr>
                         <td><?php echo $no++; ?></td>
-                        <td><?php echo $hasil["nm_kategori"]; ?>
+                        <td><?php echo $hasil['nm_kategori']; ?>
                         </td>
                         <td>
-                          <a href="e_kategori.php?id=<?php echo $hasil["id_kategori"]; ?>"
+                          <a href="e_kategori.php?id=<?php echo $hasil['id_kategori']; ?>"
                             class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i>
                           </a>
-                          <a href="h_kategori.php?id=<?php echo $hasil["id_kategori"]; ?>"
+                          <a href="h_kategori.php?id=<?php echo $hasil['id_kategori']; ?>"
                             class="btn btn-danger"
                             onclick="return confirm ('Apakah Anda Yakin ingin Menghapus Data?')">
                             <i class="bi bi-trash"></i>

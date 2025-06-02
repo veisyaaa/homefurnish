@@ -1,3 +1,23 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+  header("Location: login.php");
+  exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+  echo "<script>
+     alert('Akses ditolak! Halaman ini hanya untuk admin.');
+     window.location.href='login.php';
+     </script>";
+     exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,7 +89,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -95,8 +115,8 @@
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
-                    <i class="bi bi-airplane"></i>
-                    <span>Kategori</span>
+                    <i class="bi bi-bag-check-fill"></i>
+                    <span>Kategori Produk</span>
                 </a>
             </li><!-- End Kategori Page Nav -->
 
@@ -211,7 +231,7 @@
                     let optionAll = document.createElement("option");
                     optionAll.value = "all";
                     optionAll.textContent = "All";
-                    tipeLaporanSelect.appenChild(optionAll);
+                    tipeLaporanSelect.appendChild(optionAll);
 
                     <?php if ($resultKategori->num_rows > 0) : ?>
                         <?php while ($row = $resultKategori->fetch_assoc()) : ?>

@@ -145,48 +145,48 @@ if (isset($_POST['update'])) {
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="index.php">
-                    <i class="bi bi-house-door"></i>
+                    <i class="bi bi-grid"></i>
                     <span>Beranda</span>
                 </a>
             </li><!-- End Beranda Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="kategori.php">
-                    <i class="bi bi-tags"></i>
+                    <i class="bi bi-bag-check-fill"></i>
                     <span>Kategori Produk</span>
                 </a>
             </li><!-- End Kategori Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link" href="produk.php">
-                    <i class="bi bi-shop"></i>
+                    <i class="bi bi-question-circle"></i>
                     <span>Produk</span>
                 </a>
             </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-cart"></i>
+                    <i class="bi bi-envelope"></i>
                     <span>Keranjang</span>
                 </a>
             </li><!-- End Keranjang Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-receipt"></i>
+                    <i class="bi bi-card-list"></i>
                     <span>Transaksi</span>
                 </a>
             </li><!-- End Transaksi Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi bi-file-earmark-bar-graph"></i>
+                    <i class="bi bi-box-arrow-in-right"></i>
                     <span>Laporan</span>
                 </a>
             </li><!-- End Laporan Page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pengguna.php">
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-dash-circle"></i>
                     <span>Pengguna</span>
                 </a>
             </li><!-- End Pengguna Page Nav -->
@@ -230,7 +230,7 @@ if (isset($_POST['update'])) {
                                 </div>
                                 <div class="col-12">
                                     <label for="desk" class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" id="desk" name="desk" value="<?php echo $data['desk']; ?>" required></textarea>
+                                    <textarea class="form-control" id="desk" name="desk" value="<?php echo $data['desk']; ?>" required><?php echo $data['desk'] ?></textarea>
                                 </div>
                                 <div class="col-12">
                                     <label for="id_kategori" class="form-label">Kategori</label>
