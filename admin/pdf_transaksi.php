@@ -23,7 +23,7 @@ $mpdf = new \Mpdf\Mpdf();
 
 $html = '<html>
 <head>
-  <title>Laporan Transaksi</title>
+  <title>Laporan Data Produk</title>
   <link rel="shortcut icon" href="../../asssets/images/logos/logo-makmur.ico" type="image/x-icon">
   
    <style>
@@ -75,16 +75,13 @@ $html = '<html>
 </thead>';
 
 foreach ($data as $row) {
-    $formatted_harga = "Rp " . number_format($row["harga"], 0, ',', '.'); // Format harga
     $html .= '<tbody>
     <tr align="center">
-      <td>'.$row["id_produk"].'</td>
-      <td><img src="produk_img/'. $row["gambar"].'" alt="Gambar"></td>
-      <td>'.$row["nm_produk"].'</td>
-      <td>'.$row["nm_kategori"].'</td>
-      <td>'.$row["desk"].'</td>
-      <td>'.$formatted_harga.'</td>
-      <td>'.$row["stok"].'</td>
+      <td>' .$row["id_jual"].'</td>
+      <td>' .$row["tgl_jual"].'</td>
+      <td>' .$row["username"].'</td>
+      <td>Rp ' . number_format($row["total"], 0, ',', '.') . '</td>
+      <td>Rp ' . number_format($row["diskon"], 0, ',', '.') . '</td>
     </tr>
     </tbody>';
 }

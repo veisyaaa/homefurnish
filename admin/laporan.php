@@ -236,15 +236,15 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
                     <?php if ($resultKategori->num_rows > 0) : ?>
                         <?php while ($row = $resultKategori->fetch_assoc()) : ?>
                             let option<?php echo $row['id_kategori']; ?> = document.createElement("option");
-                            option<?php echo $row['id_kategori']; ?>.value = "<?php echo $row['id_kategori']; ?>";
-                            option<?php echo $row['id_kategori']; ?>.textContent = "<? echo $row['nm_kategori']; ?>";
+                            option<?php echo $row['id_kategori']; ?>.value = "<?php echo $row['id_kategori']; ?>"
+                            option<?php echo $row['id_kategori']; ?>.textContent = "<? echo $row['nm_kategori']; ?>"
                             tipeLaporanSelect.appendChild(option<?php echo $row['id_kategori']; ?>);
                         <?php endwhile; ?>
                     <?php endif; ?>
 
-                } else if (laporanSelect === "transakis") {
+                } else if (laporanSelect === "transaksi") {
                     let optionAll = document.createElement("option");
-                    optionAll.value = "all";
+                    optionAll.value = "All";
                     optionAll.textContent = "All";
                     tipeLaporanSelect.appendChild(optionAll);
                 }

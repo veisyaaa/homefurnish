@@ -77,7 +77,7 @@ $html = '<html>
 
 <h1 align="center">Homefurnish</h1>
 <hr>
-<h1 align="center">LAPORAN PRODUK BERDASARKAN KATEGORI</h1>
+<h1 align="center">LAPORAN DATA PRODUK</h1>
 
 <table align="center" cellspacing="0">
 <thead>
@@ -101,7 +101,7 @@ foreach ($data as $row) {
       <td>'.$row["nm_produk"].'</td>
       <td>'.$row["nm_kategori"].'</td>
       <td>'.$row["desk"].'</td>
-      <td>'.$formatted_harga.'</td>
+      <td>'.$formatted_harga.'</td> <!-- Harga dengan format Rp 6.400.000 -->
       <td>'.$row["stok"].'</td>
     </tr>
     </tbody>';
