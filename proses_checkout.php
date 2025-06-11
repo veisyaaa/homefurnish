@@ -1,3 +1,4 @@
+
 <?php
 include 'admin/koneksi.php';
 session_start();
@@ -10,7 +11,8 @@ if (!isset($_SESSION['id_user'])) {
 $id_user = $_SESSION['id_user'];
 $tgl_jual = date('Y-m-d H:i:s');
 
-//Ambil semua pesanan pengguna
+
+// Ambil semua pesanan pengguna
 $query_pesanan = "SELECT * FROM tb_pesanan WHERE id_user = '$id_user'";
 $result_pesanan = mysqli_query($koneksi, $query_pesanan);
 
@@ -19,7 +21,7 @@ if (mysqli_num_rows($result_pesanan) == 0) {
     exit;
 }
 
-//Hitung subtotal dan simpan data pesanan
+// Hitung subtotal dan simpan data pesanan
 $subtotal = 0;
 $pesanan_data = [];
 while ($row = mysqli_fetch_assoc($result_pesanan)) {
@@ -27,7 +29,7 @@ while ($row = mysqli_fetch_assoc($result_pesanan)) {
     $subtotal += $row['total'];
 }
 
-//Cek stok semua produk sebelum melanjutkan
+// Cek stok semua produk sebelum melanjutkan 
 foreach ($pesanan_data as $pesanan) {
     $id_produk = mysqli_real_escape_string($koneksi, $pesanan['id_produk']);
     $qty = intval($pesanan['qty']);
@@ -42,7 +44,7 @@ foreach ($pesanan_data as $pesanan) {
     }
 }
 
-//Hitung diskon
+// Hitung diskon
 $diskon = 0;
 if ($subtotal > 700000 && $subtotal <= 1500000) {
     $diskon = 0.05 * $subtotal;

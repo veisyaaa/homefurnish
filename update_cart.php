@@ -7,7 +7,8 @@ if (!isset($_SESSION['id_user'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['qty'])) {
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['qty'])) {
     foreach ($_POST['qty'] as $id_pesanan => $jumlah) {
         $jumlah = intval($jumlah);
         if ($jumlah >= 1) {

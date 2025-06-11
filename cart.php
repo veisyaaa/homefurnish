@@ -121,10 +121,14 @@
           }
 
           $id_user =$_SESSION['id_user']; //Ambil user_id dari sesi
+
           $query = "SELECT p.id_pesanan, pr.nm_produk, pr.harga, pr.harga, p.qty, (pr.harga * p.qty) 
                     AS total, pr.gambar FROM tb_pesanan p JOIN tb_produk pr ON 
                     p.id_produk = pr.id_produk JOIN tb_user u ON p.id_user = u.id_user WHERE u.id_user = 
                     '$id_user'";
+
+          $query = "SELECT p.id_pesanan, pr.nm_produk, pr.harga, pr.harga, p.qty, (pr.harga * p.qty) AS total, pr.gambar FROM tb_pesanan p JOIN tb_produk pr ON p.id_produk = pr.id_produk JOIN tb_user u ON p.id_user = u.id_user WHERE u.id_user = '$id_user'";
+
 
           $result = mysqli_query($koneksi, $query);
 
@@ -138,8 +142,9 @@
           $total_bayar = 0;
 
           ?>
-          
+        
           <form action="update_cart.php" method="POST">
+
           <table class="table">
             <thead>
               <tr>

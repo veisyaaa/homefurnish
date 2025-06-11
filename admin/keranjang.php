@@ -63,8 +63,14 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
+
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
+ 
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
 
                 <li class="nav-item dropdown pe-3">
 
@@ -80,6 +86,12 @@ if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+<<<<<<< HEAD
+=======
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+>>>>>>> origin/master
 
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="logout.php">
