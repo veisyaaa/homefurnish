@@ -120,7 +120,7 @@
             exit;
           }
 
-          $id_user =$_SESSION['id_user']; //Ambil user_id dari sesi
+          $id_user = $_SESSION['id_user']; //Ambil user_id dari sesi
 
           $query = "SELECT p.id_pesanan, pr.nm_produk, pr.harga, pr.harga, p.qty, (pr.harga * p.qty) 
                     AS total, pr.gambar FROM tb_pesanan p JOIN tb_produk pr ON 
@@ -182,7 +182,7 @@
                   <h5>Rp. <?php echo number_format($row['total'], 0, ',', '.'); ?></h5>
                 </td>
                 <td>
-                  <a href="hapus_cart.php?id_pesanan=<?php echo $row['id_pesanan']; ?>" class="btn btn-danger btn-sm" onlick="return confirm('Yakin ingin menghapus item ini?');">
+                  <a href="hapus_cart.php?id_pesanan=<?php echo $row['id_pesanan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus item ini?');">
                     <i class="ti-close"></i>
                   </a>
                 </td>
@@ -258,11 +258,11 @@
         })
         .then(response => response.json())
         .then(data => {
-          if (data.succes) {
+          if (data.success) {
             alert("Checkout berhasil!");
             window.location.href = "belanja.php"; //Redirect ke halaman riwayat transaksi
           } else {
-            alert("Gagal checkout: " + data.massage);
+            alert("Gagal checkout: " + data.message);
           }
         })
         .catch(error => console.error("Eror:", error));
